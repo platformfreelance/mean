@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/platformfreelance/mean#readme",
   "dependencies": {
+    "cors": "^2.8.5",
     "mongoose": "^6.7.2",
     "uuidv1": "^1.6.14"
   }
