@@ -1,0 +1,22 @@
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+.navbar{
+    background-color: black!important;
+}
+.navbar #navbarNav .nav-link{
+    color: white!important;
+}
+
+.navbar-brand{
+    color: lightblue!important;
+    font-family: Georgia, serif;
+    font-size: 30px;
+    letter-spacing: -0.8px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: 700;
+    text-decoration: none;
+    font-style: italic;
+    font-variant: small-caps;
+    text-transform: uppercase;
+}
