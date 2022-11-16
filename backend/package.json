@@ -18,8 +18,14 @@
   },
   "homepage": "https://github.com/platformfreelance/mean#readme",
   "dependencies": {
+    "base64-js": "^1.5.1",
+    "buffer": "^5.7.1",
     "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "fast-xml-parser": "^4.0.11",
+    "ieee754": "^1.2.1",
     "mongoose": "^6.7.2",
+    "mongose": "^0.0.2-security",
     "uuidv1": "^1.6.14"
   }
 }
