@@ -1,12 +1,13 @@
 .register-photo {
     background:#f1f7fc;
     padding:80px 0;
+    height: 92vh;
   }
   
   .register-photo .image-holder {
     display:table-cell;
     width:auto;
-    background:url(../assets/img/meeting.jpg);
+    background:url(../../assets/img/meeting.jpg);
     background-size:cover;
   }
   
@@ -82,5 +83,3 @@
     opacity:0.9;
     text-decoration:none;
   }
-  
-  

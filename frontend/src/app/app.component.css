@@ -3,7 +3,11 @@
 .navbar{
     background-color: black!important;
 }
-.navbar #navbarNav .nav-link{
+
+.nav-item a:hover{
+    color: lightblue!important;
+}
+.nav-item a{
     color: white!important;
 }
 
