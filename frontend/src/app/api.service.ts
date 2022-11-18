@@ -15,9 +15,10 @@ export class ApiService {
     this.http.post('/api/register',user).subscribe({
       next: data => {
         this.router.navigate(['/login'])
-        console.log("Welcome to the club! You can now log in.");
+        console.log("Welcome to the club! You can now log in."); 
         console.log(data);
-      }
+      
+      },
     })
   }
 }
