@@ -1,0 +1,6 @@
+first npm install for both backend and frontend
+then in the backend npm start
+and in the frontend ng serve (but i'm gone change it late on)
+finaly http://localhost:4200/
+
+in my case alaa i must run npm install express :/ 
