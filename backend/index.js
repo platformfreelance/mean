@@ -4,8 +4,10 @@ const app = express()
 const mongoose=require('mongoose');
 const bodyparser=require('body-parser');
 const User=require('./Models/User');
-const port = 3000
-var cors = require('cors')
+const port = 3000;
+const secret = 'projectmeanstack'; 
+var cors = require('cors');
+var jwt = require('jsonwebtoken');
 
 // Connect To Database
 mongoose.connect('mongodb://localhost:27017/authAngular', function(err,response){
@@ -15,7 +17,7 @@ mongoose.connect('mongodb://localhost:27017/authAngular', function(err,response)
     console.log("Connexion avec succès");
 })
 
-// Add headers
+// Add headers & Middleware
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
@@ -41,6 +43,40 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+
+app.get('/profile',(req,res)=>{
+
+    // Verify Token
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized request')
+    }
+    else{
+        let token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).send('Unauthorized request')
+        }
+        try{
+            let payload = jwt.verify(token, secret)
+            if (!payload) {
+                return res.status(401).send('Unauthorized request')
+            }
+            else{
+                // Return user data
+                User.findById(payload.id,function(err,user){
+                    if(err){
+                        console.log(err);
+                    }else{
+                        res.status(200).json(user);
+                    }
+                })
+            }
+        }
+        catch(err){
+            return res.status(401).send('Unauthorized request')
+        }
+    }
+});
+
 // Body Parser
 app.use(bodyparser.json());
 
@@ -65,8 +101,9 @@ app.post('/register',(req,res)=>{
                 password:password
             },(err,user)=>{
                 if(err) return res.status(500).send('There was a problem registering the user.');
-                res.status(200).send(user)
-                console.log("Utilisateur enregistré avec succès");
+                token = jwt.sign({id:user._id},secret,{expiresIn:86400});
+                res.set('Authorization', token);
+                res.json({success:true,message:"Connexion réussie"})
             })
         }
     })}
@@ -90,6 +127,8 @@ app.post('/login',(req,res)=>{
             else{
                 if (!user.authenticate(password)) return res.json({success:false,message:"Mot de passe incorrect"});
                 else{
+                    token = jwt.sign({id:user._id},secret,{expiresIn:86400});
+                    res.set('Authorization', token);
                     res.json({success:true,message:"Connexion réussie"});
                 }
             }
