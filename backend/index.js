@@ -103,7 +103,7 @@ app.post('/register',(req,res)=>{
                 if(err) return res.status(500).send('There was a problem registering the user.');
                 token = jwt.sign({id:user._id},secret,{expiresIn:86400});
                 res.set('Authorization', token);
-                res.json({success:true,message:"Connexion réussie"})
+                res.json({success:true,message:"Connexion réussie","token":token});
             })
         }
     })}
@@ -129,7 +129,7 @@ app.post('/login',(req,res)=>{
                 else{
                     token = jwt.sign({id:user._id},secret,{expiresIn:86400});
                     res.set('Authorization', token);
-                    res.json({success:true,message:"Connexion réussie"});
+                    res.json({success:true,message:"Connexion réussie","token":token});
                 }
             }
         }

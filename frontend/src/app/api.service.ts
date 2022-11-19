@@ -14,18 +14,38 @@ export class ApiService {
   registerUser(user:any){
     this.http.post('/api/register',user).subscribe({
       next: data => {
-        this.router.navigate(['/login'])
-        console.log("Welcome to the club! You can now log in.");
-        console.log(data);  
+        if((data as {[key: string]: any})['success'] == true){
+          console.log("You are logged in!");
+          localStorage.setItem('token', (data as {[key: string]: any})['token']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
+        }
+        else{
+          console.log("Wrong username or password!");
+        }
+        // console.log("You are now logged in.");
+        // this.router.navigate(['/'])
+        // console.log(data);
       }
     })
   }
   loginUser(user:any){
     this.http.post('/api/login',user).subscribe({
       next: data => {
-        console.log("You are now logged in.");
-        this.router.navigate(['/'])
-        console.log(data);
+        if((data as {[key: string]: any})['success'] == true){
+          console.log("You are logged in!");
+          localStorage.setItem('token', (data as {[key: string]: any})['token']);
+          this.router.navigate(['/']).then(() => {
+            window.location.reload();
+          });
+        }
+        else{
+          console.log("Wrong username or password!");
+        }
+        // console.log("You are now logged in.");
+        // this.router.navigate(['/'])
+        // console.log(data);
       }
     })
   }

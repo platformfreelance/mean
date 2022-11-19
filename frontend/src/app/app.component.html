@@ -1,22 +1,30 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">DOMA</a>
+    <a class="navbar-brand" routerLink="/"><img src="assets/img/logo.png" style="max-height: 45px;" alt="" srcset=""></a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/register">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="/login">Login</a>
-        </li>
-
+        
+        <ng-template [ngIf]="token">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/login">Connexion</a>
+            </li>
+    
+            <li class="nav-item">
+              <a class="nav-link" routerLink="/register">Inscription</a>
+            </li>
+        </ng-template>
+        <ng-template [ngIf]="!token">
+          <div style="position: absolute; right: 0; display: flex; align-items: center;top: 20%;">
+              <li class="nav-item">
+              <a class="nav-link" routerLink="/logout">Déconnexion</a>
+            </li>
+            <li class="nav-item" style="color: rgb(126, 171, 255);padding-right: 30px;padding-left: 10px;">{{ data }}</li>
+          </div>
+      </ng-template>
       </ul>
     </div>
   </div>
@@ -31,10 +39,10 @@
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-6">
-          <h4>Join Our Newsletter</h4>
-          <p>Tamen quem nulla quae legam multos aute sint culpa legam noster magna</p>
+          <h4>Rejoignez notre newsletter</h4>
+          <p>Soyez régulièrement informé des événements importants et des fonctionnalités récentes !</p>
           <form action="" method="post">
-            <input type="email" name="email"><input type="submit" value="Subscribe">
+            <input type="email" name="email" placeholder="Votre Email"><input type="submit" value="Subscribe">
           </form>
         </div>
       </div>
@@ -46,40 +54,40 @@
       <div class="row" style="display: flex;flex-wrap: nowrap;">
 
         <div class="col-lg-3 col-md-6 footer-contact" style="max-width: 25%;">
-          <h3>BizLand<span>.</span></h3>
+          <h3>Doma<span>.</span></h3>
           <p>
-            A108 Adam Street <br>
-            New York, NY 535022<br>
-            United States <br><br>
+            Appartement N#3<br>
+            19 Rue Nabeul 8000<br>
+            Tunisia <br><br>
             <strong>Phone:</strong> +216 00 123 456<br>
-            <strong>Email:</strong> contact@doma.com<br>
+            <strong>Email:</strong> contact@doma.tn<br>
           </p>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links" style="max-width: 25%;">
-          <h4>Useful Links</h4>
+          <h4>Liens utiles</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Home</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">About us</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Accueil</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">A propos de nous</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#">Services</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Terms of service</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Privacy policy</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Conditions d'utilisation</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Politique de confidentialité</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links" style="max-width: 25%;">
-          <h4>Our Services</h4>
+          <h4>Nos services</h4>
           <ul>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Design</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Web Development</a></li>
-            <li><i class="bx bx-chevron-right"></i> <a href="#">Product Management</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Conception Web</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Développement web</a></li>
+            <li><i class="bx bx-chevron-right"></i> <a href="#">Gestion des produits</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#">Marketing</a></li>
             <li><i class="bx bx-chevron-right"></i> <a href="#">Graphic Design</a></li>
           </ul>
         </div>
 
         <div class="col-lg-3 col-md-6 footer-links" style="max-width: 25%;">
-          <h4>Our Social Networks</h4>
+          <h4>Nos réseaux sociaux</h4>
           <!-- <p>Cras fermentum odio eu feugiat lide par naso tierra videa magna derita valies</p> -->
           <div class="social-links mt-3">
             <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
@@ -96,10 +104,10 @@
 
   <div class="container py-4">
     <div class="copyright">
-      &copy; Copyright <strong><span>DOMA</span></strong>. All Rights Reserved
+      &copy; Copyright <strong><span>DOMA</span></strong>. All Rights Reserved 2022 © 
     </div>
     <div class="credits">
-            Designed by ALAA IYED AND SAMI
+            Designed by Doma team
     </div>
   </div>
 </footer>
