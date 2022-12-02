@@ -11,7 +11,7 @@ var userSchema=mongoose.Schema({
     // Modifier pour token
     encry_password:{type:String,required:true},
     salt:{type:String,required:true},
-
+    role:{type:Number,default:0}, // 1 Client 0 Freelancer 
 }
 // Ajouté pour token
 //***************** */
