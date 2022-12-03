@@ -9,6 +9,7 @@ const secret = 'projectmeanstack';
 var cors = require('cors');
 var jwt = require('jsonwebtoken');
 const Gig = require('./Models/Gig');
+const Commande = require('./Models/Commande');
 
 // Connect To Database
 mongoose.connect('mongodb://localhost:27017/authAngular', function (err, response) {
@@ -205,7 +206,7 @@ app.post('/add_gig', (req, res) => {
                                 technologies: req.body.technologies,
                                 price: req.body.price,
                                 description: req.body.description,
-                                freelance: payload.id
+                                freelancer: payload.id
                             }, (err, gig) => {
                                 if (err) return res.status(500).send('There was a problem adding the gig.');
                                 res.status(200).json(gig);
@@ -224,6 +225,143 @@ app.post('/add_gig', (req, res) => {
         }
     }
 })
+
+// Get my commands
+app.get('/my_commands', (req, res) => {
+
+    // Verify Token
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized request')
+    }
+    else {
+        let token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).send('Unauthorized request')
+        }
+        try {
+            let payload = jwt.verify(token, secret)
+            if (!payload) {
+                return res.status(401).send('Unauthorized request')
+            }
+            else {
+                User.findById(payload.id, function (err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        if (user.role == 1) {
+                            Commande.find({ buyer: payload.id }, function (err, commands) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    res.status(200).json(commands);
+                                }
+                            });
+                        }
+                        else {
+                            res.status(401).send('Unauthorized request')
+                        }
+                    }
+                }
+                )
+            }
+        }
+        catch (err) {
+            return res.status(401).send('Unauthorized request')
+        }
+    }
+})
+
+// Confirm command
+app.post('/confirm_command', (req, res) => {
+    // Verify Token
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized request')
+    }
+    else {
+        let token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).send('Unauthorized request')
+        }
+        try {
+            let payload = jwt.verify(token, secret)
+            if (!payload) {
+                return res.status(401).send('Unauthorized request')
+            }
+            else {
+                User.findById(payload.id, function (err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        if (user.role == 1) {
+                            Commande.findById(req.body.command).exec(function (err, command) {
+                                if (err) {
+                                    console.log(err);
+                                } else {
+                                    command.currentStatus = "done";
+                                    command.save();
+                                    res.status(200).json(command);
+                                }
+                            })
+                        }
+                        else {
+                            res.status(401).send('Unauthorized request')
+                        }
+                    }
+                }
+                )
+            }
+        }
+        catch (err) {
+            return res.status(401).send('Unauthorized request')
+        }
+    }
+})
+
+// Commande gig
+app.post('/commande_gig', (req, res) => {
+    // Verify Token
+    if (!req.headers.authorization) {
+        return res.status(401).send('Unauthorized request')
+    }
+    else {
+        let token = req.headers.authorization;
+        if (!token) {
+            return res.status(401).send('Unauthorized request')
+        }
+        try {
+            let payload = jwt.verify(token, secret)
+            if (!payload) {
+                return res.status(401).send('Unauthorized request')
+            }
+            else {
+                User.findById(payload.id, function (err, user) {
+                    if (err) {
+                        console.log(err);
+                    } else {
+                        if (user.role == 1) {
+                            Commande.create({
+                                gig: req.body.gig,
+                                freelancer: req.body.freelancer,
+                                buyer: payload.id,
+                            }, (err, gig) => {
+                                if (err) return res.status(500).send('There was a problem adding the command.');
+                                res.status(200).json(gig);
+                            })
+                        }
+                        else {
+                            res.status(401).send('Unauthorized request')
+                        }
+                    }
+                }
+                )
+            }
+        }
+        catch (err) {
+            return res.status(401).send('Unauthorized request')
+        }
+    }
+})
+
 
 // Middleware 
 app.use(cors())
