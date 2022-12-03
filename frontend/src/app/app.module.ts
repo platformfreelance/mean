@@ -8,6 +8,9 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { JwtModule } from "@auth0/angular-jwt";
 import { HttpClientModule } from '@angular/common/http';
+import { SpaceComponent } from './space/space.component';
+import { CommandsComponent } from './commands/commands.component';
+import { ListingComponent } from './listing/listing.component';
 
 export function tokenGetter() {
   return localStorage.getItem("access_token");
@@ -19,6 +22,9 @@ export function tokenGetter() {
     HomeComponent,
     LoginComponent,
     RegisterComponent,
+    SpaceComponent,
+    CommandsComponent,
+    ListingComponent,
   ],
   imports: [
     BrowserModule,

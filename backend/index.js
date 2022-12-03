@@ -163,13 +163,15 @@ app.get('/gigs', (req, res) => {
             }
             else {
                 // Return all gigs
-                Gig.find({}, function (err, gigs) {
+                Gig.find({})
+                .populate('freelancer','firstname lastname')
+                .exec(function (err, gigs) {
                     if (err) {
                         console.log(err);
                     } else {
                         res.status(200).json(gigs);
                     }
-                });
+                })
 
             }
         }
@@ -249,14 +251,16 @@ app.get('/my_commands', (req, res) => {
                         console.log(err);
                     } else {
                         if (user.role == 1) {
-                            Commande.find({ buyer: payload.id }, function (err, commands) {
+                            Commande.find({buyer: payload.id}).populate('gig freelancer','title firstname lastname')
+                            .exec(function (err, commands) {
                                 if (err) {
                                     console.log(err);
                                 } else {
                                     res.status(200).json(commands);
                                 }
-                            });
+                            })
                         }
+                    
                         else {
                             res.status(401).send('Unauthorized request')
                         }
@@ -339,11 +343,13 @@ app.post('/commande_gig', (req, res) => {
                         console.log(err);
                     } else {
                         if (user.role == 1) {
+                            console.log(req.body.gig);
                             Commande.create({
                                 gig: req.body.gig,
                                 freelancer: req.body.freelancer,
                                 buyer: payload.id,
                             }, (err, gig) => {
+                                console.log(err);
                                 if (err) return res.status(500).send('There was a problem adding the command.');
                                 res.status(200).json(gig);
                             })
